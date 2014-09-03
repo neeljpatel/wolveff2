@@ -47,8 +47,8 @@ class Player(models.Model):
     team = models.CharField(max_length=200)
     position = models.CharField(max_length=200, choices=AVAILABLE_POSITIONS)
     league = models.ForeignKey(League)
-    roster = models.ForeignKey(Roster, null=True)
-    cost = models.IntegerField(null=True)
+    roster = models.ForeignKey(Roster, null=True, blank=True)
+    cost = models.IntegerField()
 
     def is_drafted(self):
         return self.roster is not None

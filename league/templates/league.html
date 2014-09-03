@@ -8,20 +8,80 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="row">
             {# add team #}
+            <h3>add team</h3>
+            <form role="form" method="post" action="{% url 'view-league' league.id %}">
+                {% csrf_token %}
+                {% bootstrap_form new_team_form %}
+                <input type="hidden" name="action" value="newteam" />
+                {% buttons submit='Create team' %}{% endbuttons %}
+            </form>
         </div>
         <div class="row">
             {# player list #}
+            <h3>player list {{ remaining_players|length }}</h3>
+            <h2>{{ remaining_players|length }} players remaining</h2>
+
+            <table class="table">
+            <thead>
+                <th>#</th>
+                <th>name</th>
+                <th>position</th>
+                <th>bye week</th>
+            </thead>
+            <tbody>
+                {% for player in remaining_players %}
+                <tr>
+                    <td>{{ player.number }}</td>
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.position }}</td>
+                    <td>{{ player.bye_week }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+                
+            </table>
         </div>
     </div>
+
+    <div class="col-md-1"></div>
+
     <div class="col-md-8">
         <div class="row">
             {# get random player #}
+            {% if next_player %}
+            <h3>player on deck:</h3>
+            <h1>{{ next_player.name }}</h1>
+            <form role="form" class="form-inline" method="post" action="{% url 'view-league' league.id %}">
+                {% csrf_token %}
+                {% bootstrap_form player_on_deck_form %}
+                <input type="hidden" name="action" value="assignplayer" />
+                <input type="hidden" name="playerid" value="{{ next_player.id }}" />
+                {% buttons submit='add to roster' %}{% endbuttons %}
+            </form>
+            {% endif %}
+            <a href="{% url 'next-player' league.id %}">get next player</a>
         </div>
         <div class="row">
             {# rosters #}
+            <h3>rosters</h3>
+            <ul class="list-inline">
+                {% for roster in rosters %}
+                    <li>
+                        <ul>
+                            <li><strong>{{ roster.name }}</strong></li>
+                            <li>remaining: {{ roster.remaining }}</li>
+                            <li>spent: {{ roster.spent }}</li>
+                            <li>max bid: {{ roster.max_bid }}</li>
+                            {% for p in roster.players %}
+                            <li>{{p.name}}, {{p.position}}, {{p.cost}}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>

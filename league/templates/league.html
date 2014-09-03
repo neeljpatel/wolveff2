@@ -53,7 +53,7 @@
             {# get random player #}
             {% if next_player %}
             <h3>player on deck:</h3>
-            <h1>{{ next_player.name }}</h1>
+            <h1>{{ next_player.number }}. {{ next_player.name }} {{ next_player.position }}</h1>
             <form role="form" class="form-inline" method="post" action="{% url 'view-league' league.id %}">
                 {% csrf_token %}
                 {% bootstrap_form player_on_deck_form %}

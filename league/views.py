@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+# from django.http import HttpResponseRedirect
 from league.models import League, TemplatePlayer
 from league.forms import LeagueForm, NewTeamForm, UploadFileForm, MovePlayerForm, NextPlayerForm
 # from league.util import fill_league_with_players

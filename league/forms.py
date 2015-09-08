@@ -29,7 +29,7 @@ class PlayerOnDeckForm(forms.ModelForm):
 
 
 class NextPlayerForm(forms.Form):
-    roster = forms.ModelChoiceField()
+    roster = forms.ModelChoiceField(queryset=None)
     cost = forms.IntegerField()
 
 
@@ -39,6 +39,6 @@ class UploadFileForm(forms.Form):
 
 
 class MovePlayerForm(forms.Form):
-    player = forms.ModelChoiceField()
-    roster = forms.ModelChoiceField()
+    player = forms.ModelChoiceField(queryset=None)
+    roster = forms.ModelChoiceField(queryset=None)
     cost = forms.IntegerField()

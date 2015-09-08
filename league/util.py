@@ -12,3 +12,21 @@ def fill_league_with_players(league):
         d['position'] = row['Pos'].lower()
         d['league'] = league
         league.player_set.create(**d)
+
+def write_playes(league):
+    import csv
+    players = league.player_set.all()
+    d = []
+    for p in players:
+        c = {}
+        c['name'] = p.name
+        c['pos'] = p.position
+        c['team'] = p.roster.name
+        d.append(c)
+    with open('players.csv', 'w') as f:
+        h = ('name', 'pos', 'team')
+        w = csv.DictWriter(f, fieldnames=('name', 'pos', 'team'))
+        headers = dict( (n,n) for n in h )
+        w.writerow(headers)
+        for i in d:
+            w.writerow(i)

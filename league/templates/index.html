@@ -24,4 +24,14 @@
         {% endfor %}
     </div>
 </div>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <h3>Upload player file</h3>
+        <form enctype="multipart/form-data" role="form" method="post" action="{% url 'upload' %}">
+            {% csrf_token %}
+            {% bootstrap_form upload %}
+            {% buttons submit='Upload' %}{% endbuttons %}
+        </form>
+    </div>
+</div>
 {% endblock %}
